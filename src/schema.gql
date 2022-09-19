@@ -1,0 +1,102 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input ChangeTaskStatusInput {
+  """Task id."""
+  id: Int!
+
+  """Task status. Should be TO_DO, IN_PROGRESS, DONE or ARCHIVED."""
+  status: String!
+}
+
+input CreateTaskInput {
+  """Task description."""
+  description: String!
+
+  """Task title."""
+  title: String!
+
+  """User id."""
+  user: Int!
+}
+
+input CreateUserInput {
+  """User password"""
+  password: String!
+
+  """The user name."""
+  username: String!
+}
+
+type LoginResponseDTO {
+  access_token: String!
+  user: UserContextDTO!
+}
+
+input LoginUserInput {
+  password: String!
+  username: String!
+}
+
+type Mutation {
+  changeTaskStatus(changeTaskStatusInput: ChangeTaskStatusInput!): Task!
+  createTask(createTaskInput: CreateTaskInput!): Task!
+  createUser(createUserInput: CreateUserInput!): User!
+  login(loginUserInput: LoginUserInput!): LoginResponseDTO!
+}
+
+type Query {
+  task(id: Int!): Task!
+  tasks: [Task!]!
+  user(id: Int!): User!
+  users: [User!]!
+}
+
+type Task {
+  """Task description."""
+  description: String!
+
+  """Task ID."""
+  id: Int!
+  status: TaskStatus!
+
+  """Task title."""
+  title: String!
+  user: User!
+}
+
+"""The status of a given task."""
+enum TaskStatus {
+  """Tasks that are done and delivered, or undone and dropped."""
+  ARCHIVED
+
+  """When the task is done."""
+  DONE
+
+  """When a task is being performed by an user."""
+  IN_PROGRESS
+
+  """The first status of a task."""
+  TO_DO
+}
+
+type User {
+  """User ID"""
+  id: Int!
+
+  """User password"""
+  password: String!
+  tasks: [Task!]
+
+  """The user name."""
+  username: String!
+}
+
+type UserContextDTO {
+  """The user ID"""
+  id: Int!
+
+  """The user name."""
+  username: String!
+}

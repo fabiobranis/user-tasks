@@ -1,0 +1,27 @@
+version: '3.5'
+
+services:
+  postgres:
+    container_name: pg-user-tasks-challenge
+    image: postgres
+    environment:
+      - POSTGRES_USER=task
+      - POSTGRES_PASSWORD=task
+      - POSTGRES_DB=taskapp
+    ports:
+      - '5432:5432'
+  app:
+    container_name: app-user-tasks-challenge
+    image: fabio-nunes/user-tasks-challenge
+    depends_on:
+      - pg-user-tasks-challenge
+    environment:
+      - SYNC_DATABASE=true
+      - POSTGRES_HOST=pg-user-tasks-challenge
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=task
+      - POSTGRES_PASSWORD=task
+      - POSTGRES_DATABASE=taskapp
+      - PORT=3000
+    ports:
+      - '3000:3000'
